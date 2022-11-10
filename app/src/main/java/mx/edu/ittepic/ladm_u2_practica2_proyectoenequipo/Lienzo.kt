@@ -3,6 +3,7 @@ package mx.edu.ittepic.ladm_u2_practica2_proyectoenequipo
 import android.app.Activity
 import android.graphics.*
 import android.view.Display
+import android.view.MotionEvent
 import android.view.View
 
 
@@ -13,7 +14,7 @@ class Lienzo(p:MainActivity): View(p) {
     var screen: Rect = Rect(0, 0, 0, 0)
     var displayMio: Display? = null
     val background = BitmapFactory.decodeResource(getResources(),R.drawable.fondo);
-
+    var punteroFigura : Figura ?= null
     //variables para las imagenes (estas posiciones siempre seran las cajas correctas)
     var xini1=250f
     var yini1=200f
@@ -33,7 +34,7 @@ class Lienzo(p:MainActivity): View(p) {
     var igualA= Figura(this,R.drawable.aigual,xini4,yini4)
     var tresA= Figura(this,R.drawable.a3,xini5,yini5)
 
-    
+
     override fun onDraw(c: Canvas) {
         super.onDraw(c)
         var p = Paint()
@@ -55,5 +56,40 @@ class Lienzo(p:MainActivity): View(p) {
         masA.pintar(c)
         dosA.pintar(c)
         igualA.pintar(c)
-        tresA.pintar(c)    }
+        tresA.pintar(c)
+    }
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when(event.action){
+            MotionEvent.ACTION_DOWN->{
+                //PRESIONASTE
+                if (unoA.determinarArea(event.x,event.y)){
+                    punteroFigura=unoA;
+                }
+                if (masA.determinarArea(event.x,event.y)){
+                    punteroFigura=masA;
+                }
+                if (dosA.determinarArea(event.x,event.y)){
+                    punteroFigura=dosA;
+                }
+                if (igualA.determinarArea(event.x,event.y)){
+                    punteroFigura=igualA;
+                }
+                if (tresA.determinarArea(event.x,event.y)){
+                    punteroFigura=tresA;
+                }
+            }
+            MotionEvent.ACTION_MOVE->{
+                //ARRASTRASTE
+                if (punteroFigura!=null){
+                    punteroFigura!!.mover(event.x,event.y)
+                }
+            }
+            MotionEvent.ACTION_UP->{
+                //SOLTASTE EL DEDO
+                punteroFigura= null
+            }
+        }
+        invalidate()
+        return true
+    }
 }
