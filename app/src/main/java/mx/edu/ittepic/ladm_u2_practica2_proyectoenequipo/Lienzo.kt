@@ -33,6 +33,15 @@ class Lienzo(p:MainActivity): View(p) {
     var num2=0
     var res=0
 
+//variables para posiciones globales
+    var yB=200f
+    var xB=250f
+
+    var yA=200f
+    var xA=250f
+
+    var yC=200f
+    var xC=250f
 // declarar todas las figuras
 /*
 *
@@ -202,20 +211,39 @@ class Lienzo(p:MainActivity): View(p) {
          println("Longitud del arreglo: "+arregloFiguras.size)
         }
 
+        masA=Figura(this,R.drawable.amas,xA,yA)
+        menosA=Figura(this,R.drawable.amenos,xA,yA)
+        igualA=Figura(this,R.drawable.aigual,xA,yA)
 
+        masB=Figura(this,R.drawable.bmas,xB,yB)
+        menosB=Figura(this,R.drawable.bmenos,xB,yB)
+        igualB=Figura(this,R.drawable.bigual,xB,yB)
+
+        masC=Figura(this,R.drawable.bigual,xC,yC)
+        menosC=Figura(this,R.drawable.bigual,xC,yC)
+        igualC=Figura(this,R.drawable.bigual,xC,yC)
+
+//metemos primero las B porque van hasta arriba
+        //a partir del indice 8 osea 9,10,11,12..17
+        //se encuentran los signos siempre en las mismas posiciones para cuando  se quiera hacer referencia
+        //solo hay que calcular en que indice se encuentra [9..17]
+        arregloFiguras.add(masB)
+        arregloFiguras.add(menosB)
+        arregloFiguras.add(igualB)
+
+        arregloFiguras.add(masA)
+        arregloFiguras.add(menosA)
+        arregloFiguras.add(igualA)
+
+        arregloFiguras.add(masC)
+        arregloFiguras.add(menosC)
+        arregloFiguras.add(igualC)
 
 
 
     }
     fun crearFiguras(numero:Int,queEs:String){
-        var yB=200f
-        var xB=250f
 
-        var yA=200f
-        var xA=250f
-
-        var yC=200f
-        var xC=250f
         when(queEs){
             "num1"->{
                 xB= 250f
@@ -239,6 +267,9 @@ class Lienzo(p:MainActivity): View(p) {
                 yC= 1200f
             }
         }
+
+
+
         when(numero){
             1->{
                 unoB= Figura(this,R.drawable.b1,xB,yB)
