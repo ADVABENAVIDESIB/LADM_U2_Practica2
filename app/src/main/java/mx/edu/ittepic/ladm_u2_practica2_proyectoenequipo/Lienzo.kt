@@ -5,6 +5,7 @@ import android.graphics.*
 import android.view.Display
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 
 
 class Lienzo(p:MainActivity): View(p) {
@@ -33,7 +34,7 @@ class Lienzo(p:MainActivity): View(p) {
     var masA= Figura(this,R.drawable.amas,xini2,yini2)
     var igualA= Figura(this,R.drawable.aigual,xini4,yini4)
     var tresA= Figura(this,R.drawable.a3,xini5,yini5)
-
+    var figura=""
 
     override fun onDraw(c: Canvas) {
         super.onDraw(c)
@@ -61,27 +62,38 @@ class Lienzo(p:MainActivity): View(p) {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when(event.action){
             MotionEvent.ACTION_DOWN->{
+
                 //PRESIONASTE
                 if (unoA.determinarArea(event.x,event.y)){
                     punteroFigura=unoA;
+                    figura="UnoA"
                 }
                 if (masA.determinarArea(event.x,event.y)){
                     punteroFigura=masA;
+                    figura="MasA"
                 }
                 if (dosA.determinarArea(event.x,event.y)){
                     punteroFigura=dosA;
+                    figura="dosA"
                 }
                 if (igualA.determinarArea(event.x,event.y)){
                     punteroFigura=igualA;
+                    figura="igualA"
                 }
                 if (tresA.determinarArea(event.x,event.y)){
                     punteroFigura=tresA;
+                    figura="tresA"
                 }
             }
             MotionEvent.ACTION_MOVE->{
                 //ARRASTRASTE
                 if (punteroFigura!=null){
                     punteroFigura!!.mover(event.x,event.y)
+                }
+
+                if(punteroFigura!!.colisionoCon(unoA)){
+                    Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
+                    println("colisionaron "+figura+" con UnoA")
                 }
             }
             MotionEvent.ACTION_UP->{
