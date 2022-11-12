@@ -11,6 +11,15 @@ import java.lang.Thread.sleep
 
 
 class Lienzo(p:MainActivity): View(p) {
+
+    //Variables estrellas
+    var estrella=Estrella(this)
+    var arregloDeEstrellas= ArrayList<Estrella>()
+
+    var numero = (Math.random() * 1080 + 10).toFloat()
+    var opacidad=0
+    //------
+
     var pizarra= BitmapFactory.decodeResource(resources, R.drawable.pizarra1)
     var uno= BitmapFactory.decodeResource(resources, R.drawable.a1)
 
@@ -464,5 +473,26 @@ class Lienzo(p:MainActivity): View(p) {
         }
         numero1= arregloFiguras[1];
     }
+
+    //Funciones movimiento estrellas
+    fun creaEstrellas() {
+        var i=0
+        while (i<150){
+            arregloDeEstrellas.add(Estrella(this))
+            i++
+        }
+    }
+    fun animaEstrellas() {
+
+        var contador=0
+        for(star in arregloDeEstrellas){
+
+            star.animar()
+            //println("copo"+contador++)
+        }
+
+    }
+
+    //------------------------------
 
 }
