@@ -5,10 +5,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.View
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlin.coroutines.EmptyCoroutineContext
 
 class Estrella(puntero: Lienzo) {
     //val radio=radio
@@ -17,7 +15,7 @@ class Estrella(puntero: Lienzo) {
 
 
     var x=(Math.random() * 1080 + 10).toFloat()
-    var y=0F
+    var y=(Math.random() * -500 -500).toFloat()
     //var velocidad=velocidad
     var puntero= puntero
 
@@ -28,11 +26,24 @@ class Estrella(puntero: Lienzo) {
 
 
 
+    var escope= CoroutineScope(Job()+Dispatchers.Default)
 
-    fun animar() = GlobalScope.launch{
-        while(true){
+    var animar= escope.launch(EmptyCoroutineContext,CoroutineStart.LAZY){
+        while(y<2220){
             vel=(Math.random() * 60 + 50).toLong()
-            if(y>2220) y=0F
+            //if(y>2220) y=0F
+
+            //println(y)
+            y=y+((Math.random()*20+3).toFloat()*2F)
+            puntero.invalidate()
+            delay(vel)
+        }
+    }
+    fun animar1() = GlobalScope.launch{
+
+        while(y<2220){
+            vel=(Math.random() * 60 + 50).toLong()
+            //if(y>2220) y=0F
 
             //println(y)
             y=y+((Math.random()*20+3).toFloat()*2F)

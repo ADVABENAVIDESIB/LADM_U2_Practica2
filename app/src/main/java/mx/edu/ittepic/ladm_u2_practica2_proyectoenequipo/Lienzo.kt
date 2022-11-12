@@ -1,21 +1,25 @@
 package mx.edu.ittepic.ladm_u2_practica2_proyectoenequipo
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.graphics.*
 import android.view.Display
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Toast
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
 
 
 class Lienzo(p:MainActivity): View(p) {
+var p=p
 
+    var gano=false
     //Variables estrellas
     var estrella=Estrella(this)
     var arregloDeEstrellas= ArrayList<Estrella>()
-
+    var terminoUnaEjecucion=true
     var numero = (Math.random() * 1080 + 10).toFloat()
     var opacidad=0
     //------
@@ -30,11 +34,11 @@ class Lienzo(p:MainActivity): View(p) {
     //variables para las imagenes (estas posiciones siempre seran las cajas correctas)
     var xini1=250f
     var yini1=200f
-    var xini2=370f
+    var xini2=270f
     var yini2=200f
     var xini3=490f
     var yini3=200f
-    var xini4=610f
+    var xini4=510f
     var yini4=200f
     var xini5=730f
     var yini5=200f
@@ -112,8 +116,8 @@ class Lienzo(p:MainActivity): View(p) {
     lateinit var nueveC:Figura
     lateinit var diezC:Figura
     //arreglo de figuras a pintar
-    var arregloFiguras = arrayListOf<Figura>()
-
+    var arregloFiguras = arrayListOf<Figura>(Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB))
+    var arregloFigurasAux = arrayListOf<Figura>()
     var figura=""
 
     //validaciones
@@ -122,10 +126,14 @@ class Lienzo(p:MainActivity): View(p) {
     var tresSi = true;
     var masSi = true;
     var igualSi = true;
-    var num = 0;
+    var num = -1;
     init {
+       // generaNumeros()
+
+        creaEstrellas()
         generaNumeros()
         sleep(100)
+
     }
     override fun onDraw(c: Canvas) {
         super.onDraw(c)
@@ -148,11 +156,17 @@ class Lienzo(p:MainActivity): View(p) {
 
 //        masA.pintar(c)
 //        igualA.pintar(c)
+        //sleep(2000)
+             pintarNumeros(c);
+            for(star in arregloDeEstrellas){
+                star.pintar(c)
+            }
 
-        pintarNumeros(c);
 
     }
 //de aqui hacia abajo es de Ana
+
+    //de aqui hacia abajo es de Ana
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when(event.action){
             MotionEvent.ACTION_DOWN->{
@@ -255,31 +269,12 @@ class Lienzo(p:MainActivity): View(p) {
         return true
     }
 
-    fun cambiar(){
-        //'+B'=9, '=B'=10, '+A'=11, '=A'=12, '+C'=13, '=C'=14
-        //     0    1     2        3    4    5        6   7   8
-        // [1Bnum,1Anum,1Cnum],[2Bnum,2Anum,2Cnum],[Bres,Ares,Cres]
-        println("entron con $num")
-        if(num>=5){
-            arregloFiguras[2].x = arregloFiguras[1].x;
-            arregloFiguras[2].y = arregloFiguras[1].y;
 
-            arregloFiguras[5].x = arregloFiguras[4].x;
-            arregloFiguras[5].y = arregloFiguras[4].y;
 
-            arregloFiguras[8].x = arregloFiguras[7].x;
-            arregloFiguras[8].y = arregloFiguras[7].y;
 
-            arregloFiguras[13].x = arregloFiguras[11].x;
-            arregloFiguras[13].y =  arregloFiguras[11].y;
-
-            arregloFiguras[14].x =  arregloFiguras[12].x;
-            arregloFiguras[14].y = arregloFiguras[12].y;
-        }
-        invalidate()
-    }
     //De aqui hacia arriba es de Ana
     fun generaNumeros(){
+        arregloFiguras.clear()
         var resultado=11
 
         while (resultado>10){
@@ -291,7 +286,6 @@ class Lienzo(p:MainActivity): View(p) {
 
         println("NUM1 "+num1);
         println("NUM2 "+num2);
-
         println("RESULTADO "+resultado);
         for (i in 0..2){
             when(i){
@@ -305,11 +299,11 @@ class Lienzo(p:MainActivity): View(p) {
                     crearFiguras(res,"res")
                 }
             }
-         println("Longitud del arreglo: "+arregloFiguras.size)
+        // println("Longitud del arreglo: "+arregloFiguras.size)
         }
 
 
-        var xini2=370f
+        var xini2=270f
         var yini2=200f
 
         var xini4=610f
@@ -347,35 +341,33 @@ class Lienzo(p:MainActivity): View(p) {
         arregloFiguras.add(igualC)//'=C'=14
 
 
-
     }
     fun crearFiguras(numero:Int,queEs:String){
         yB=200F
         when(queEs){
             "num1"->{
-                xB= 250f
-                xA=730f
+                xB= 150f
+                xA=630f
                 yA= 900f
-                xC=250f
+                xC=150f
                 yC= 1200f
             }
             "num2"->{
-                xB= 490f
-                xA=490f
+                xB= 390f
+                xA=390f
                 yA= 900f
-                xC=490f
+                xC=390f
                 yC= 1200f
             }
             "res"->{
-                xB= 730f
+                xB= 630f
 
-                xA=250f //las cordenadas de A estan cambiadas con el num1 para hacer "shufle"
+                xA=150f //las cordenadas de A estan cambiadas con el num1 para hacer "shufle"
                 yA= 900f
-                xC=730f
+                xC=630f
                 yC= 1200f
             }
         }
-
 
 
         when(numero){
@@ -463,36 +455,74 @@ class Lienzo(p:MainActivity): View(p) {
                 arregloFiguras.add(diezC)
             }
         }
+        invalidate()
     }
     fun pintarNumeros(c:Canvas){
       //  println("AL MOMENTO DE PINTAR "+arregloFiguras.size)
         for(i in 0..arregloFiguras.size-1){
-
            // println("dentro del for"+i)
             arregloFiguras[i].pintar(c)
         }
-        numero1= arregloFiguras[1];
     }
 
     //Funciones movimiento estrellas
     fun creaEstrellas() {
         var i=0
-        while (i<150){
+        while (i<5){
             arregloDeEstrellas.add(Estrella(this))
             i++
         }
     }
     fun animaEstrellas() {
-
         var contador=0
         for(star in arregloDeEstrellas){
-
-            star.animar()
+            star.animar.start()
             //println("copo"+contador++)
         }
-
     }
+    fun cambiar(){
+        //'+B'=9, '=B'=10, '+A'=11, '=A'=12, '+C'=13, '=C'=14
+        //     0    1     2        3    4    5        6   7   8
+        // [1Bnum,1Anum,1Cnum],[2Bnum,2Anum,2Cnum],[Bres,Ares,Cres]
+        if(arregloFiguras[0].x==arregloFiguras[1].x&&
+            arregloFiguras[3].x==arregloFiguras[4].x&&
+            arregloFiguras[6].x==arregloFiguras[7].x&&
+            arregloFiguras[9].x==arregloFiguras[11].x&&
+            arregloFiguras[10].x==arregloFiguras[12].x){
+            println("SI ENTRA                                                                       1100")
+        }
+        if(arregloFiguras[0].x==arregloFiguras[1].x&&
+            arregloFiguras[3].x==arregloFiguras[4].x&&
+            arregloFiguras[6].x==arregloFiguras[7].x&&
+            arregloFiguras[9].x==arregloFiguras[11].x&&
+            arregloFiguras[10].x==arregloFiguras[12].x){
+            unoSi = true;
+            dosSi = true;
+            tresSi = true;
+            masSi = true;
+            igualSi = true;
+            num=0
+            arregloFiguras[2].x = arregloFiguras[1].x;
+            arregloFiguras[2].y = arregloFiguras[1].y;
+            arregloFiguras[5].x = arregloFiguras[4].x;
+            arregloFiguras[5].y = arregloFiguras[4].y;
+            arregloFiguras[8].x = arregloFiguras[7].x;
+            arregloFiguras[8].y = arregloFiguras[7].y;
+            arregloFiguras[13].x = arregloFiguras[11].x;
+            arregloFiguras[13].y =  arregloFiguras[11].y;
+            arregloFiguras[14].x =  arregloFiguras[12].x;
+            arregloFiguras[14].y = arregloFiguras[12].y;
 
-    //------------------------------
+            creaEstrellas()
+            animaEstrellas()
+            corr()
+            terminoUnaEjecucion=true
+            println("terminoUnaEjecucion=true*******************")
 
+        }
+    }
+        fun corr()= GlobalScope.launch{
+                        delay(8000)
+                        generaNumeros()
+            }
 }
