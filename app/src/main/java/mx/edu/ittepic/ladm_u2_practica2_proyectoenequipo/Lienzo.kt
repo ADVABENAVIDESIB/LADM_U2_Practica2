@@ -354,8 +354,7 @@ class Lienzo(p:MainActivity): View(p) {
         when(queEs){
             "num1"->{
                 xB= 250f
-
-                xA=250f //las cordenadas de A estan cambiadas con el num1 para hacer "shufle"
+                xA=730f
                 yA= 900f
                 xC=250f
                 yC= 1200f
@@ -369,7 +368,8 @@ class Lienzo(p:MainActivity): View(p) {
             }
             "res"->{
                 xB= 730f
-                xA=730f
+
+                xA=250f //las cordenadas de A estan cambiadas con el num1 para hacer "shufle"
                 yA= 900f
                 xC=730f
                 yC= 1200f
