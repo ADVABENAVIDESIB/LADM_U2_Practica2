@@ -3,6 +3,7 @@ package mx.edu.ittepic.ladm_u2_practica2_proyectoenequipo
 import android.app.Activity
 import android.app.AlertDialog
 import android.graphics.*
+import android.media.MediaPlayer
 import android.view.Display
 import android.view.MotionEvent
 import android.view.View
@@ -18,6 +19,10 @@ var p=p
     //Variables estrellas
     var primeraVez=true
     var arregloDeEstrellas= ArrayList<Estrella>()
+    var mpB: MediaPlayer = MediaPlayer.create(context, R.raw.aplausos)
+    var mpN: MediaPlayer = MediaPlayer.create(context, R.raw.no)
+    var mpC: MediaPlayer = MediaPlayer.create(context, R.raw.correcto)
+    var mpNarr: MediaPlayer = MediaPlayer.create(context, R.raw.hola)
     //------
     var pizarra= BitmapFactory.decodeResource(resources, R.drawable.pizarra1)
 
@@ -112,7 +117,7 @@ var p=p
     init {
        // creaEstrellas()
         generaNumeros()
-
+        mpNarr?.start()
     }
     override fun onDraw(c: Canvas) {
         super.onDraw(c)
@@ -179,10 +184,11 @@ var p=p
                         //println("colisionaro "+figura+" con UnoB")
                         arregloFiguras[1].x = arregloFiguras[0].x
                         arregloFiguras[1].y = arregloFiguras[0].y
+                        mpC?.start()
                         if(unoSi){num++; unoSi=false; cambiar();}
                         // unoB.x=3000f; unoB.y=3000f;
 
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[0]) && punteroFigura!=arregloFiguras[1]){}//println("no en uno")}
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[0]) && punteroFigura!=arregloFiguras[1]){mpN?.start();}//println("no en uno")}
                     if(punteroFigura!!.colisionoCon(arregloFiguras[3]) && punteroFigura==arregloFiguras[4]){
 
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
@@ -190,36 +196,40 @@ var p=p
 
                         arregloFiguras[4].x = arregloFiguras[3].x
                         arregloFiguras[4].y = arregloFiguras[3].y
+                        mpC?.start()
                         if(dosSi){num++; dosSi=false;   cambiar();}
                         // dosB.x=3000f; dosB.y=3000f;
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[3]) && punteroFigura!=arregloFiguras[4]) {}//println("no en ods")}
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[3]) && punteroFigura!=arregloFiguras[4]) {mpN?.start();}//println("no en ods")}
                     if(punteroFigura!!.colisionoCon(arregloFiguras[6]) && punteroFigura==arregloFiguras[7]){
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
                         //println("colisionaro "+figura+" con UnoB")
 
                         arregloFiguras[7].x = arregloFiguras[6].x
                         arregloFiguras[7].y = arregloFiguras[6].y
+                        mpC?.start()
                         if(tresSi){num++; tresSi=false;   cambiar();}
                         // tresB.x=3000f; tresB.y=3000f;
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[6]) && punteroFigura!=arregloFiguras[7]) {}//println("no en trees")}
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[6]) && punteroFigura!=arregloFiguras[7]) {mpN?.start();}//println("no en trees")}
                     if(punteroFigura!!.colisionoCon(arregloFiguras[9]) && punteroFigura==arregloFiguras[11]){
 
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
                         //println("colisionaro "+figura+" con UnoB")
                         arregloFiguras[11].x = arregloFiguras[9].x
                         arregloFiguras[11].y = arregloFiguras[9].y
+                        mpC?.start()
                         if(masSi){num++; masSi=false;   cambiar();}
                         // masB.x=3000f; masB.y=3000f;
-                    } else  if(punteroFigura!!.colisionoCon(arregloFiguras[9]) && punteroFigura==arregloFiguras[11]) {}//println("no en ms")}
+                    } else  if(punteroFigura!!.colisionoCon(arregloFiguras[9]) && punteroFigura==arregloFiguras[11]) {mpN?.start();}//println("no en ms")}
                     if(punteroFigura!!.colisionoCon(arregloFiguras[10]) && punteroFigura==arregloFiguras[12]){
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
                         //println("colisionaro "+figura+" con UnoB")
 
                         arregloFiguras[12].x = arregloFiguras[10].x
                         arregloFiguras[12].y = arregloFiguras[10].y
+                        mpC?.start()
                         if(igualSi==true){num++; igualSi=false; cambiar();}
                         // igualB.x=3000f; igualB.y=3000f;
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[10]) && punteroFigura!=arregloFiguras[12]) {}//println("no en igual" )}
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[10]) && punteroFigura!=arregloFiguras[12]) {mpN?.start();}//println("no en igual" )}
 
 
 
@@ -497,6 +507,7 @@ var p=p
                 creaEstrellas()
                 animaEstrellas()
              }
+            mpB?.start()
             corr()
             primeraVez=true
            // println("terminoUnaEjecucion=true*******************")
