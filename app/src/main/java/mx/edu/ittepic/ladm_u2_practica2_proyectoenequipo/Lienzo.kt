@@ -15,17 +15,11 @@ import java.lang.Thread.sleep
 class Lienzo(p:MainActivity): View(p) {
 var p=p
 
-    var gano=false
     //Variables estrellas
-    var estrella=Estrella(this)
+    var primeraVez=true
     var arregloDeEstrellas= ArrayList<Estrella>()
-    var terminoUnaEjecucion=true
-    var numero = (Math.random() * 1080 + 10).toFloat()
-    var opacidad=0
     //------
-
     var pizarra= BitmapFactory.decodeResource(resources, R.drawable.pizarra1)
-    var uno= BitmapFactory.decodeResource(resources, R.drawable.a1)
 
     var screen: Rect = Rect(0, 0, 0, 0)
     var displayMio: Display? = null
@@ -56,18 +50,6 @@ var p=p
     var yC=0f
     var xC=0f
 // declarar todas las figuras
-/*
-*
-    var masA= Figura(this,R.drawable.amas,xini2,yini2)
-
-    var unoA= Figura(this,R.drawable.a1,xini1,yini1)
-    var dosA= Figura(this,R.drawable.a2,xini3,yini3)
-    var tresA= Figura(this,R.drawable.a3,xini5,yini5)
-    *     var igualA= Figura(this,R.drawable.aigual,xini4,yini4)
-
-* */
-
-    lateinit var numero1:Figura
 
     var masA= Figura(this,R.drawable.amas,xini2,yini2)
     var igualA= Figura(this,R.drawable.aigual,xini4,yini4)
@@ -117,7 +99,6 @@ var p=p
     lateinit var diezC:Figura
     //arreglo de figuras a pintar
     var arregloFiguras = arrayListOf<Figura>(Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB),Figura(this,R.drawable.b1,xB,yB))
-    var arregloFigurasAux = arrayListOf<Figura>()
     var figura=""
 
     //validaciones
@@ -128,11 +109,8 @@ var p=p
     var igualSi = true;
     var num = -1;
     init {
-       // generaNumeros()
-
-        creaEstrellas()
+       // creaEstrellas()
         generaNumeros()
-        sleep(100)
 
     }
     override fun onDraw(c: Canvas) {
@@ -152,11 +130,6 @@ var p=p
         p.setTextSize(100f)
         c.drawBitmap(background, null, screen, null);
         c.drawBitmap(pizarra,40f,100f,p)
-
-
-//        masA.pintar(c)
-//        igualA.pintar(c)
-        //sleep(2000)
              pintarNumeros(c);
             for(star in arregloDeEstrellas){
                 star.pintar(c)
@@ -164,9 +137,7 @@ var p=p
 
 
     }
-//de aqui hacia abajo es de Ana
 
-    //de aqui hacia abajo es de Ana
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when(event.action){
             MotionEvent.ACTION_DOWN->{
@@ -177,27 +148,22 @@ var p=p
                 if (arregloFiguras[1].determinarArea(event.x,event.y)){
                     punteroFigura=arregloFiguras[1];
                     figura="UnoA"
-                    println("Estas clickeando el NUM1")
                 }
                 if (arregloFiguras[11].determinarArea(event.x,event.y)){
                     punteroFigura=arregloFiguras[11];
                     figura="MasA"
-                    println("Estas clickeando el MAS")
                 }
                 if (arregloFiguras[4].determinarArea(event.x,event.y)){
                     punteroFigura=arregloFiguras[4];
                     figura="dosA"
-                    println("Estas clickeando el NUM2")
                 }
                 if (arregloFiguras[12].determinarArea(event.x,event.y)){
                     punteroFigura=arregloFiguras[12];
                     figura="igualA"
-                    println("Estas clickeando el =")
                 }
                 if (arregloFiguras[7].determinarArea(event.x,event.y)){
                     punteroFigura=arregloFiguras[7];
                     figura="tresA"
-                    println("Estas clickeando el RESULTADO")
                 }
             }
 
@@ -212,10 +178,10 @@ var p=p
                         //println("colisionaro "+figura+" con UnoB")
                         arregloFiguras[1].x = arregloFiguras[0].x
                         arregloFiguras[1].y = arregloFiguras[0].y
-                        if(unoSi){num++; unoSi=false; print("uno:"+num); cambiar();}
+                        if(unoSi){num++; unoSi=false; cambiar();}
                         // unoB.x=3000f; unoB.y=3000f;
 
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[0]) && punteroFigura!=arregloFiguras[1]){println("no en uno")}
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[0]) && punteroFigura!=arregloFiguras[1]){}//println("no en uno")}
                     if(punteroFigura!!.colisionoCon(arregloFiguras[3]) && punteroFigura==arregloFiguras[4]){
 
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
@@ -223,36 +189,36 @@ var p=p
 
                         arregloFiguras[4].x = arregloFiguras[3].x
                         arregloFiguras[4].y = arregloFiguras[3].y
-                        if(dosSi){num++; dosSi=false; print("dos:"+num); cambiar();}
+                        if(dosSi){num++; dosSi=false;   cambiar();}
                         // dosB.x=3000f; dosB.y=3000f;
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[3]) && punteroFigura!=arregloFiguras[4]) {println("no en ods")}
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[3]) && punteroFigura!=arregloFiguras[4]) {}//println("no en ods")}
                     if(punteroFigura!!.colisionoCon(arregloFiguras[6]) && punteroFigura==arregloFiguras[7]){
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
                         //println("colisionaro "+figura+" con UnoB")
 
                         arregloFiguras[7].x = arregloFiguras[6].x
                         arregloFiguras[7].y = arregloFiguras[6].y
-                        if(tresSi){num++; tresSi=false; print("tres:"+num); cambiar();}
+                        if(tresSi){num++; tresSi=false;   cambiar();}
                         // tresB.x=3000f; tresB.y=3000f;
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[6]) && punteroFigura!=arregloFiguras[7]) {println("no en trees")}
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[6]) && punteroFigura!=arregloFiguras[7]) {}//println("no en trees")}
                     if(punteroFigura!!.colisionoCon(arregloFiguras[9]) && punteroFigura==arregloFiguras[11]){
 
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
                         //println("colisionaro "+figura+" con UnoB")
                         arregloFiguras[11].x = arregloFiguras[9].x
                         arregloFiguras[11].y = arregloFiguras[9].y
-                        if(masSi){num++; masSi=false; print("mas:"+num); cambiar();}
+                        if(masSi){num++; masSi=false;   cambiar();}
                         // masB.x=3000f; masB.y=3000f;
-                    } else  if(punteroFigura!!.colisionoCon(arregloFiguras[9]) && punteroFigura==arregloFiguras[11]) {println("no en ms")}
+                    } else  if(punteroFigura!!.colisionoCon(arregloFiguras[9]) && punteroFigura==arregloFiguras[11]) {}//println("no en ms")}
                     if(punteroFigura!!.colisionoCon(arregloFiguras[10]) && punteroFigura==arregloFiguras[12]){
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
                         //println("colisionaro "+figura+" con UnoB")
 
                         arregloFiguras[12].x = arregloFiguras[10].x
                         arregloFiguras[12].y = arregloFiguras[10].y
-                        if(igualSi==true){num++; igualSi=false; println("igual:"+num); cambiar();}
+                        if(igualSi==true){num++; igualSi=false; cambiar();}
                         // igualB.x=3000f; igualB.y=3000f;
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[10]) && punteroFigura!=arregloFiguras[12]) {println("no en igual" )}
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[10]) && punteroFigura!=arregloFiguras[12]) {}//println("no en igual" )}
 
 
 
@@ -272,74 +238,81 @@ var p=p
 
 
 
-    //De aqui hacia arriba es de Ana
     fun generaNumeros(){
-        arregloFiguras.clear()
-        var resultado=11
 
-        while (resultado>10){
-           num1=(Math.random()*10+1).toInt();
-           num2=(Math.random()*10+1).toInt();
-           res=num1+num2
-            resultado=res
-        }
 
-        println("NUM1 "+num1);
-        println("NUM2 "+num2);
-        println("RESULTADO "+resultado);
-        for (i in 0..2){
-            when(i){
-                0->{
-                    crearFiguras(num1,"num1");
-                }
-                1->{
-                    crearFiguras(num2,"num2");
-                }
-                2->{
-                    crearFiguras(res,"res")
-                }
+        if(primeraVez){
+            //println("HOLA GENERA NUMEROSSS ------------------------------------------------")
+            primeraVez=false
+            sleep(10)
+            arregloFiguras.clear()
+            var resultado=11
+            while (resultado>10){
+                num1=(Math.random()*10+1).toInt();
+                num2=(Math.random()*10+1).toInt();
+                res=num1+num2
+                resultado=res
             }
-        // println("Longitud del arreglo: "+arregloFiguras.size)
-        }
+
+            //println("NUM1 "+num1);
+            //println("NUM2 "+num2);
+            //println("RESULTADO "+resultado);
+            for (i in 0..2){
+                when(i){
+                    0->{
+                        crearFiguras(num1,"num1");
+                    }
+                    1->{
+                        crearFiguras(num2,"num2");
+                    }
+                    2->{
+                        crearFiguras(res,"res")
+                    }
+                }
+                // println("Longitud del arreglo: "+arregloFiguras.size)
+            }
 
 
-        var xini2=270f
-        var yini2=200f
+            var xini2=270f
+            var yini2=200f
 
-        var xini4=610f
+            var xini4=610f
 
-        var yini4=500f
-        yB=200F
-        masA=Figura(this,R.drawable.amas,xini2+240F,yini2+700f)// las x estan volteadas para desacomodarlas
-       // menosA=Figura(this,R.drawable.amenos,xA+600f,yA)
-        igualA=Figura(this,R.drawable.aigual,xini2,yini2+700f)//
+            var yini4=500f
+            yB=200F
+            masA=Figura(this,R.drawable.amas,xini2+240F,yini2+700f)// las x estan volteadas para desacomodarlas
+            // menosA=Figura(this,R.drawable.amenos,xA+600f,yA)
+            igualA=Figura(this,R.drawable.aigual,xini2,yini2+700f)//
 
-        masB=Figura(this,R.drawable.bmas,xini2,yini2)
-      //  menosB=Figura(this,R.drawable.bmenos,xB+200f,yB)
-        igualB=Figura(this,R.drawable.bigual,xini2+240F,yini2)
+            masB=Figura(this,R.drawable.bmas,xini2,yini2)
+            //  menosB=Figura(this,R.drawable.bmenos,xB+200f,yB)
+            igualB=Figura(this,R.drawable.bigual,xini2+240F,yini2)
 
-        masC=Figura(this,R.drawable.cmas,xini2,yini2+1000F)
-      //  menosC=Figura(this,R.drawable.cmenos,xC+200f,yC)
-        igualC=Figura(this,R.drawable.cigual,xini2+240F,yini2+1000f)
+            masC=Figura(this,R.drawable.cmas,xini2,yini2+1000F)
+            //  menosC=Figura(this,R.drawable.cmenos,xC+200f,yC)
+            igualC=Figura(this,R.drawable.cigual,xini2+240F,yini2+1000f)
 
 //metemos primero las B porque van hasta arriba
-        //a partir del indice 8 osea 9,10,11,12..17 cuando exista el menos en este caso solo es hasta el 14
-        //se encuentran los signos siempre en las mismas posiciones para cuando  se quiera hacer referencia
-        //solo hay que calcular en que indice se encuentra [9..17]
-        //'+B'=9, '=B'=10, '+A'=11, '=A'=12, '+C'=13, '=C'=14
+            //a partir del indice 8 osea 9,10,11,12..17 cuando exista el menos en este caso solo es hasta el 14
+            //se encuentran los signos siempre en las mismas posiciones para cuando  se quiera hacer referencia
+            //solo hay que calcular en que indice se encuentra [9..17]
+            //'+B'=9, '=B'=10, '+A'=11, '=A'=12, '+C'=13, '=C'=14
 
-        arregloFiguras.add(masB)//'+B'=9
-        //arregloFiguras.add(menosB)
-        arregloFiguras.add(igualB)//'=B'=10
+            arregloFiguras.add(masB)//'+B'=9
+            //arregloFiguras.add(menosB)
+            arregloFiguras.add(igualB)//'=B'=10
 
-        arregloFiguras.add(masA)//'+A'=11
-        //arregloFiguras.add(menosA)
-        arregloFiguras.add(igualA)//'=A'=12
+            arregloFiguras.add(masA)//'+A'=11
+            //arregloFiguras.add(menosA)
+            arregloFiguras.add(igualA)//'=A'=12
 
-        arregloFiguras.add(masC)//'+C'=13
-       // arregloFiguras.add(menosC)
-        arregloFiguras.add(igualC)//'=C'=14
+            arregloFiguras.add(masC)//'+C'=13
+            // arregloFiguras.add(menosC)
+            arregloFiguras.add(igualC)//'=C'=14
+            primeraVez=false
 
+
+        }
 
     }
     fun crearFiguras(numero:Int,queEs:String){
@@ -484,13 +457,7 @@ var p=p
         //'+B'=9, '=B'=10, '+A'=11, '=A'=12, '+C'=13, '=C'=14
         //     0    1     2        3    4    5        6   7   8
         // [1Bnum,1Anum,1Cnum],[2Bnum,2Anum,2Cnum],[Bres,Ares,Cres]
-        if(arregloFiguras[0].x==arregloFiguras[1].x&&
-            arregloFiguras[3].x==arregloFiguras[4].x&&
-            arregloFiguras[6].x==arregloFiguras[7].x&&
-            arregloFiguras[9].x==arregloFiguras[11].x&&
-            arregloFiguras[10].x==arregloFiguras[12].x){
-            println("SI ENTRA                                                                       1100")
-        }
+
         if(arregloFiguras[0].x==arregloFiguras[1].x&&
             arregloFiguras[3].x==arregloFiguras[4].x&&
             arregloFiguras[6].x==arregloFiguras[7].x&&
@@ -513,16 +480,19 @@ var p=p
             arregloFiguras[14].x =  arregloFiguras[12].x;
             arregloFiguras[14].y = arregloFiguras[12].y;
 
-            creaEstrellas()
-            animaEstrellas()
+
+            p.runOnUiThread {
+                creaEstrellas()
+                animaEstrellas()
+             }
             corr()
-            terminoUnaEjecucion=true
-            println("terminoUnaEjecucion=true*******************")
+            primeraVez=true
+           // println("terminoUnaEjecucion=true*******************")
 
         }
     }
         fun corr()= GlobalScope.launch{
                         delay(8000)
-                        generaNumeros()
+                generaNumeros()
             }
 }
