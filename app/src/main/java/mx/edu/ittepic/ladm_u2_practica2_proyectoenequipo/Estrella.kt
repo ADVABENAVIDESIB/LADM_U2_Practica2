@@ -29,7 +29,7 @@ class Estrella(puntero: Lienzo) {
 
     var escope= CoroutineScope(Job()+Dispatchers.Default)
     var animar= escope.launch(EmptyCoroutineContext,CoroutineStart.LAZY){
-
+        puntero.oso = BitmapFactory.decodeResource(puntero.resources, R.drawable.celebra)
         while(y<2220){
           //  puntero.p.runOnUiThread {
             vel=(Math.random() * 60 + 50).toLong()

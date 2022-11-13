@@ -478,9 +478,12 @@ var p=p
         }
     }
     fun animaEstrellas() {
+
         var contador=0
+
         for(star in arregloDeEstrellas){
             star.animar.start()
+
             //println("copo"+contador++)
         }
     }
@@ -519,7 +522,7 @@ var p=p
             mpB?.start()
             corr()
             primeraVez=true
-            oso = BitmapFactory.decodeResource(resources, R.drawable.osoestatico)
+
            // println("terminoUnaEjecucion=true*******************")
 
         }
@@ -527,5 +530,6 @@ var p=p
         fun corr()= GlobalScope.launch{
                         delay(8000)
                 generaNumeros()
+            oso = BitmapFactory.decodeResource(resources, R.drawable.osoestatico)
             }
 }
