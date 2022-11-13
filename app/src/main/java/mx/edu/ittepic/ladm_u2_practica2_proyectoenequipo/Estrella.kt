@@ -31,14 +31,14 @@ class Estrella(puntero: Lienzo) {
     var animar= escope.launch(EmptyCoroutineContext,CoroutineStart.LAZY){
 
         while(y<2220){
-            puntero.p.runOnUiThread {
+          //  puntero.p.runOnUiThread {
             vel=(Math.random() * 60 + 50).toLong()
             //if(y>2220) y=0F
 
             //println(y)
             y=y+((Math.random()*20+3).toFloat()*2F)
             puntero.invalidate()
-            }
+           // }
             delay(vel)
         }
 

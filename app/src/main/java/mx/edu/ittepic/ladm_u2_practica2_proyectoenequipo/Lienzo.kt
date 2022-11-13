@@ -39,6 +39,7 @@ var p=p
     var num1=0
     var num2=0
     var res=0
+    var op = 0
 
 //variables para posiciones globales
     var yB=0f
@@ -51,9 +52,9 @@ var p=p
     var xC=0f
 // declarar todas las figuras
 
-    var masA= Figura(this,R.drawable.amas,xini2,yini2)
+   // var masA= Figura(this,R.drawable.amas,xini2,yini2)
     var igualA= Figura(this,R.drawable.aigual,xini4,yini4)
-   // lateinit var masA:Figura
+    lateinit var masA:Figura
     lateinit var menosA:Figura
    // lateinit var igualA:Figura
     lateinit var unoA:Figura
@@ -246,14 +247,25 @@ var p=p
             primeraVez=false
             sleep(10)
             arregloFiguras.clear()
+            op =(Math.random()*2+1).toInt(); //si es 1 se hace suma, si es 2 será resta
             var resultado=11
-            while (resultado>10){
-                num1=(Math.random()*10+1).toInt();
-                num2=(Math.random()*10+1).toInt();
-                res=num1+num2
-                resultado=res
+            var resultado2=0
+            if(op==1){ //suma
+                while (resultado>10){
+                    num1=(Math.random()*10+1).toInt();
+                    num2=(Math.random()*10+1).toInt();
+                    res=num1+num2
+                    resultado=res
+                }
+            } else { //resta
+                while (resultado2<1){
+                    num1=(Math.random()*10+1).toInt();
+                    num2=(Math.random()*10+1).toInt();
+                    res=num1-num2
+                    resultado2=res
+                   // println("RESULTADO resta "+resultado2);
+                }
             }
-
             //println("NUM1 "+num1);
             //println("NUM2 "+num2);
             //println("RESULTADO "+resultado);
@@ -273,24 +285,24 @@ var p=p
             }
 
 
-            var xini2=270f
-            var yini2=200f
+            var xini2=300f
+            var yini2=250f
 
             var xini4=610f
 
             var yini4=500f
             yB=200F
-            masA=Figura(this,R.drawable.amas,xini2+240F,yini2+700f)// las x estan volteadas para desacomodarlas
-            // menosA=Figura(this,R.drawable.amenos,xA+600f,yA)
-            igualA=Figura(this,R.drawable.aigual,xini2,yini2+700f)//
+            if(op==1) { masA=Figura(this,R.drawable.amas,xini2+240F,yini2+600f)// las x estan volteadas para desacomodarlas
+            }else{      menosA=Figura(this,R.drawable.amenos,xini2+240F,yini2+600f) }
+            igualA=Figura(this,R.drawable.aigual,420f,yini2+600f)//
 
-            masB=Figura(this,R.drawable.bmas,xini2,yini2)
-            //  menosB=Figura(this,R.drawable.bmenos,xB+200f,yB)
+            if(op==1) { masB=Figura(this,R.drawable.bmas,xini2,yini2)
+            }else{      menosB=Figura(this,R.drawable.bmenos,xini2,yini2) }
             igualB=Figura(this,R.drawable.bigual,xini2+240F,yini2)
 
-            masC=Figura(this,R.drawable.cmas,xini2,yini2+1000F)
-            //  menosC=Figura(this,R.drawable.cmenos,xC+200f,yC)
-            igualC=Figura(this,R.drawable.cigual,xini2+240F,yini2+1000f)
+            if(op==1) { masC=Figura(this,R.drawable.cmas,xini2,yini2+3000F)
+            }else{      menosC=Figura(this,R.drawable.cmenos,xini2,yini2+3000F)}
+            igualC=Figura(this,R.drawable.cigual,xini2+240F,yini2+3000f)
 
 //metemos primero las B porque van hasta arriba
             //a partir del indice 8 osea 9,10,11,12..17 cuando exista el menos en este caso solo es hasta el 14
@@ -298,16 +310,16 @@ var p=p
             //solo hay que calcular en que indice se encuentra [9..17]
             //'+B'=9, '=B'=10, '+A'=11, '=A'=12, '+C'=13, '=C'=14
 
-            arregloFiguras.add(masB)//'+B'=9
-            //arregloFiguras.add(menosB)
+            if(op==1) {arregloFiguras.add(masB)}//'+B'=9
+            else {arregloFiguras.add(menosB)}
             arregloFiguras.add(igualB)//'=B'=10
 
-            arregloFiguras.add(masA)//'+A'=11
-            //arregloFiguras.add(menosA)
+            if(op==1) { arregloFiguras.add(masA)}//'+A'=11
+            else {arregloFiguras.add(menosA)}
             arregloFiguras.add(igualA)//'=A'=12
 
-            arregloFiguras.add(masC)//'+C'=13
-            // arregloFiguras.add(menosC)
+            if(op==1) {arregloFiguras.add(masC)}//'+C'=13
+            else {arregloFiguras.add(menosC)}
             arregloFiguras.add(igualC)//'=C'=14
             primeraVez=false
 
@@ -316,29 +328,29 @@ var p=p
 
     }
     fun crearFiguras(numero:Int,queEs:String){
-        yB=200F
+        yB=250F
         when(queEs){
             "num1"->{
-                xB= 150f
-                xA=630f
-                yA= 900f
+                xB= 180f
+                xA=660f
+                yA= 850f
                 xC=150f
-                yC= 1200f
+                yC= 3200f
             }
             "num2"->{
-                xB= 390f
-                xA=390f
-                yA= 900f
+                xB= 420f
+                xA=300f
+                yA= 850f
                 xC=390f
-                yC= 1200f
+                yC=3200f
             }
             "res"->{
-                xB= 630f
+                xB= 660f
 
-                xA=150f //las cordenadas de A estan cambiadas con el num1 para hacer "shufle"
-                yA= 900f
+                xA=180f //las cordenadas de A estan cambiadas con el num1 para hacer "shufle"
+                yA= 850f
                 xC=630f
-                yC= 1200f
+                yC= 3200f
             }
         }
 
