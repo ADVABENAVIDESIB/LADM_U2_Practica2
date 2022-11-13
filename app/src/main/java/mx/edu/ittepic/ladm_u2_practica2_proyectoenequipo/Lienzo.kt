@@ -25,6 +25,7 @@ var p=p
     var mpNarr: MediaPlayer = MediaPlayer.create(context, R.raw.hola)
     //------
     var pizarra= BitmapFactory.decodeResource(resources, R.drawable.pizarra1)
+    var oso = BitmapFactory.decodeResource(resources, R.drawable.osoestatico)
 
     var screen: Rect = Rect(0, 0, 0, 0)
     var displayMio: Display? = null
@@ -72,8 +73,6 @@ var p=p
     lateinit var ochoA:Figura
     lateinit var nueveA:Figura
     lateinit var diezA:Figura
-
-
 
     //B's
     lateinit var masB:Figura
@@ -136,6 +135,7 @@ var p=p
         p.setTextSize(100f)
         c.drawBitmap(background, null, screen, null);
         c.drawBitmap(pizarra,40f,100f,p)
+        c.drawBitmap(oso, 10f, 600f, p)
              pintarNumeros(c);
             for(star in arregloDeEstrellas){
                 star.pintar(c)
@@ -179,63 +179,76 @@ var p=p
                     punteroFigura!!.mover(event.x,event.y)
 
                     if(punteroFigura!!.colisionoCon(arregloFiguras[0]) && punteroFigura==arregloFiguras[1]){
-
+                        //CAJA 1
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
                         //println("colisionaro "+figura+" con UnoB")
                         arregloFiguras[1].x = arregloFiguras[0].x
                         arregloFiguras[1].y = arregloFiguras[0].y
+                        oso = BitmapFactory.decodeResource(resources, R.drawable.oyes6)
                         mpC?.start()
                         if(unoSi){num++; unoSi=false; cambiar();}
                         // unoB.x=3000f; unoB.y=3000f;
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[0]) && punteroFigura!=arregloFiguras[1]){
+                        oso = BitmapFactory.decodeResource(resources, R.drawable.olen)
+                        mpN?.start();
+                    }//println("no en uno")}
 
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[0]) && punteroFigura!=arregloFiguras[1]){mpN?.start();}//println("no en uno")}
                     if(punteroFigura!!.colisionoCon(arregloFiguras[3]) && punteroFigura==arregloFiguras[4]){
-
+                        //CAJA 3
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
                         //println("colisionaro "+figura+" con UnoB")
-
                         arregloFiguras[4].x = arregloFiguras[3].x
                         arregloFiguras[4].y = arregloFiguras[3].y
+                        oso = BitmapFactory.decodeResource(resources, R.drawable.oyes6)
                         mpC?.start()
                         if(dosSi){num++; dosSi=false;   cambiar();}
                         // dosB.x=3000f; dosB.y=3000f;
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[3]) && punteroFigura!=arregloFiguras[4]) {mpN?.start();}//println("no en ods")}
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[3]) && punteroFigura!=arregloFiguras[4]) {
+                        oso = BitmapFactory.decodeResource(resources, R.drawable.olen)
+                        mpN?.start();}//println("no en ods")}
+
                     if(punteroFigura!!.colisionoCon(arregloFiguras[6]) && punteroFigura==arregloFiguras[7]){
+                        //CAJA 5
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
                         //println("colisionaro "+figura+" con UnoB")
-
                         arregloFiguras[7].x = arregloFiguras[6].x
                         arregloFiguras[7].y = arregloFiguras[6].y
+                        oso = BitmapFactory.decodeResource(resources, R.drawable.oyes6)
                         mpC?.start()
                         if(tresSi){num++; tresSi=false;   cambiar();}
                         // tresB.x=3000f; tresB.y=3000f;
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[6]) && punteroFigura!=arregloFiguras[7]) {mpN?.start();}//println("no en trees")}
-                    if(punteroFigura!!.colisionoCon(arregloFiguras[9]) && punteroFigura==arregloFiguras[11]){
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[6]) && punteroFigura!=arregloFiguras[7]) {
+                        oso = BitmapFactory.decodeResource(resources, R.drawable.olen)
+                        mpN?.start();}//println("no en trees")}
 
+                    if(punteroFigura!!.colisionoCon(arregloFiguras[9]) && punteroFigura==arregloFiguras[11]){
+                        //CAJA2
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
                         //println("colisionaro "+figura+" con UnoB")
                         arregloFiguras[11].x = arregloFiguras[9].x
                         arregloFiguras[11].y = arregloFiguras[9].y
+                        oso = BitmapFactory.decodeResource(resources, R.drawable.oyes6)
                         mpC?.start()
                         if(masSi){num++; masSi=false;   cambiar();}
                         // masB.x=3000f; masB.y=3000f;
-                    } else  if(punteroFigura!!.colisionoCon(arregloFiguras[9]) && punteroFigura==arregloFiguras[11]) {mpN?.start();}//println("no en ms")}
+                    } else  if(punteroFigura!!.colisionoCon(arregloFiguras[9]) && punteroFigura!=arregloFiguras[11]) {
+                        oso = BitmapFactory.decodeResource(resources, R.drawable.olen)
+                        mpN?.start();}//println("no en ms")}
+
                     if(punteroFigura!!.colisionoCon(arregloFiguras[10]) && punteroFigura==arregloFiguras[12]){
+                        //CAJA 4
                         // Toast.makeText(context, "colisionaron "+figura+" con UnoA",Toast.LENGTH_SHORT).show()
                         //println("colisionaro "+figura+" con UnoB")
-
                         arregloFiguras[12].x = arregloFiguras[10].x
                         arregloFiguras[12].y = arregloFiguras[10].y
+                        oso = BitmapFactory.decodeResource(resources, R.drawable.oyes6)
                         mpC?.start()
                         if(igualSi==true){num++; igualSi=false; cambiar();}
                         // igualB.x=3000f; igualB.y=3000f;
-                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[10]) && punteroFigura!=arregloFiguras[12]) {mpN?.start();}//println("no en igual" )}
-
-
-
+                    } else if(punteroFigura!!.colisionoCon(arregloFiguras[10]) && punteroFigura!=arregloFiguras[12]) {
+                        oso = BitmapFactory.decodeResource(resources, R.drawable.olen)
+                        mpN?.start();}//println("no en igual" )}
                 }
-
-
             }
             MotionEvent.ACTION_UP->{
                 //SOLTASTE EL DEDO
@@ -245,8 +258,6 @@ var p=p
         invalidate()
         return true
     }
-
-
 
 
     fun generaNumeros(){
@@ -510,6 +521,7 @@ var p=p
             mpB?.start()
             corr()
             primeraVez=true
+            oso = BitmapFactory.decodeResource(resources, R.drawable.osoestatico)
            // println("terminoUnaEjecucion=true*******************")
 
         }
