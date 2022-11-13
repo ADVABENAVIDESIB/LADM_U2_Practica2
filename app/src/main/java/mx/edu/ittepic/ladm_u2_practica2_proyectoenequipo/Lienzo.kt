@@ -135,13 +135,11 @@ var p=p
         p.setTextSize(100f)
         c.drawBitmap(background, null, screen, null);
         c.drawBitmap(pizarra,40f,100f,p)
-        c.drawBitmap(oso, 10f, 600f, p)
+        c.drawBitmap(oso, 300f, 1000f, p)
              pintarNumeros(c);
             for(star in arregloDeEstrellas){
                 star.pintar(c)
             }
-
-
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
